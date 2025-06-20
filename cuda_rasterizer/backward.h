@@ -26,19 +26,23 @@ namespace BACKWARD
 		const uint32_t* point_list,
 		int W, int H,
 		const float* bg_color,
+		const float* empty_ins_feats,
 		const float2* means2D,
 		const float4* conic_opacity,
 		const float* colors,
+		const float* ins_feats,
 		const float* depths,
 		const float* alphas,
 		const uint32_t* n_contrib,
 		const float* dL_dpixels,
+		const float* dL_dout_ins_feats,
 		const float* dL_dpixel_depths,
 		const float* dL_dalphas,
 		float3* dL_dmean2D,
 		float4* dL_dconic2D,
 		float* dL_dopacity,
 		float* dL_dcolors,
+		float* dL_dins_feats,
 		float* dL_ddepths);
 
 	void preprocess(

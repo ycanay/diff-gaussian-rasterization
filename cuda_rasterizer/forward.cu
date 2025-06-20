@@ -382,7 +382,7 @@ renderCUDA(
 		for (int ch = 0; ch < CHANNELS; ch++)
 			out_color[ch * H * W + pix_id] = C[ch] + T * bg_color[ch];
 		for (int ch = 0; ch < FEAT_CHANNELS; ch++)
-			out_ins_feats[ch * H * W + pix_id] = ins_feats_local[ch] + T * empty_ins_feat[ch];
+			out_ins_feats[ch * H * W + pix_id] = ins_feats_local[ch] + T * empty_ins_feats[ch];
 		out_alpha[pix_id] = weight; //1 - T;
 		out_depth[pix_id] = D;
 	}

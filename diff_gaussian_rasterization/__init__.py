@@ -28,6 +28,8 @@ def rasterize_gaussians(
     scales,
     rotations,
     cov3Ds_precomp,
+    theta, 
+    rho,
     raster_settings,
 ):
     return _RasterizeGaussians.apply(
@@ -40,6 +42,8 @@ def rasterize_gaussians(
         scales,
         rotations,
         cov3Ds_precomp,
+        theta, # unused, but kept for compatibility
+        rho, # unused, but kept for compatibility
         raster_settings,
     )
 
@@ -197,7 +201,7 @@ class GaussianRasterizer(nn.Module):
             
         return visible
 
-    def forward(self, means3D, means2D, opacities, shs = None, colors_precomp = None, ins_feats = None, scales = None, rotations = None, cov3D_precomp = None):
+    def forward(self, means3D, means2D, opacities, shs = None, colors_precomp = None, ins_feats = None, scales = None, rotations = None, cov3D_precomp = None, theta = None, rho = None):
         
         raster_settings = self.raster_settings
 
@@ -211,6 +215,8 @@ class GaussianRasterizer(nn.Module):
             shs = torch.Tensor([])
         if colors_precomp is None:
             colors_precomp = torch.Tensor([])
+        if ins_feats is None:
+            ins_feats = torch.Tensor([])
 
         if scales is None:
             scales = torch.Tensor([])
@@ -218,6 +224,8 @@ class GaussianRasterizer(nn.Module):
             rotations = torch.Tensor([])
         if cov3D_precomp is None:
             cov3D_precomp = torch.Tensor([])
+        if rho is None:
+            rho = torch.Tensor([])
 
         # Invoke C++/CUDA rasterization routine
         return rasterize_gaussians(
@@ -230,6 +238,8 @@ class GaussianRasterizer(nn.Module):
             scales, 
             rotations,
             cov3D_precomp,
+            theta,
+            rho,
             raster_settings, 
         )
 
